@@ -5,3 +5,5 @@ Messages repo: https://github.com/kuhamaven/jibber-jabber-messages
 User-Auth repo: https://github.com/kuhamaven/jibber-jabber-user-auth
 
 Posts repo: https://github.com/kuhamaven/jibber-jabber-posts
+
+UI repo: https://github.com/sofiasdz/jibber-jabber-ui
