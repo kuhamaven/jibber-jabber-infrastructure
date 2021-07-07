@@ -2,6 +2,14 @@ version: '3'
 
 services:
 
+  jibber-jabber-proxy:
+    image: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+      - 443:443
+
   jibber-jabber-posts-api:
     image: ghcr.io/kuhamaven/jibber-jabber-posts_api:latest
     ports:
@@ -64,13 +72,6 @@ services:
     ports:
       - 3000:3000
 
-  jibber-jabber-proxy:
-    image: nginx
-    ports:
-      - 8080:80
-    volumes:
-      - ~/Sandbox/nginx-docker/static/:/usr/share/nginx/html:ro
-      - ~/Sandbox/nginx-docker/conf.d:/etc/nginx/conf.d:ro
 
 volumes:
   posts:
