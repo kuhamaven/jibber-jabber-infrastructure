@@ -3,7 +3,6 @@ version: '3'
 services:
 
   jibber-jabber-posts-api:
-    container_name: api-posts
     image: ghcr.io/kuhamaven/jibber-jabber-posts_api:latest
     ports:
       - 8001:8001
@@ -23,7 +22,6 @@ services:
       - posts:/var/lib/postgresql/data
 
   jibber-jabber-auth-api:
-    container_name: api-auth
     image: ghcr.io/kuhamaven/jibber-jabber-users-auth_api:latest
     ports:
       - 8002:8002
@@ -43,7 +41,6 @@ services:
       - auth:/var/lib/postgresql/data
 
   jibber-jabber-messages-api:
-    container_name: api-messages
     image: ghcr.io/kuhamaven/jibber-jabber-messages_api:latest
     ports:
       - 8003:8003
@@ -61,6 +58,19 @@ services:
       - 5435:5432
     volumes:
       - messages:/var/lib/postgresql/data
+
+  jibber-jabber-client:
+    image: ghcr.io/sofiasdz/jibber-jabber-ui:latest
+    ports:
+      - 3000:3000
+
+  jibber-jabber-proxy:
+    image: nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ~/Sandbox/nginx-docker/static/:/usr/share/nginx/html:ro
+      - ~/Sandbox/nginx-docker/conf.d:/etc/nginx/conf.d:ro
 
 volumes:
   posts:
