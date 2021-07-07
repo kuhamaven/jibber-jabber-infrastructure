@@ -13,7 +13,6 @@ services:
       - jibber-jabber-posts-db
 
   jibber-jabber-posts-db:
-    container_name: postsDB
     image: postgres:12
     restart: always
     env_file:
@@ -34,7 +33,6 @@ services:
       - jibber-jabber-auth-db
 
   jibber-jabber-auth-db:
-    container_name: authDB
     image: postgres:12
     restart: always
     env_file:
@@ -55,7 +53,6 @@ services:
       - jibber-jabber-messages-db
 
   jibber-jabber-messages-db:
-    container_name: messagesDB
     image: postgres:12
     restart: always
     env_file:
