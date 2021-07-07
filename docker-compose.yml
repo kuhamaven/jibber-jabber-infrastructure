@@ -1,0 +1,71 @@
+version: '3'
+
+services:
+
+  jibber-jabber-posts-api:
+    container_name: api-posts
+    image: ghcr.io/kuhamaven/jibber-jabber-posts_api:latest
+    ports:
+      - 8001:8001
+    env_file:
+      - posts.env
+    depends_on:
+      - jibber-jabber-posts-db
+
+  jibber-jabber-posts-db:
+    container_name: postsDB
+    image: postgres:12
+    restart: always
+    env_file:
+      - posts.env
+    ports:
+      - 5433:5432
+    volumes:
+      - posts:/var/lib/postgresql/data
+
+  jibber-jabber-auth-api:
+    container_name: api-auth
+    image: ghcr.io/kuhamaven/jibber-jabber-users-auth_api:latest
+    ports:
+      - 8002:8002
+    env_file:
+      - auth.env
+    depends_on:
+      - jibber-jabber-auth-db
+
+  jibber-jabber-auth-db:
+    container_name: authDB
+    image: postgres:12
+    restart: always
+    env_file:
+      - auth.env
+    ports:
+      - 5434:5432
+    volumes:
+      - auth:/var/lib/postgresql/data
+
+  jibber-jabber-messages-api:
+    container_name: api-messages
+    image: ghcr.io/kuhamaven/jibber-jabber-messages_api:latest
+    ports:
+      - 8003:8003
+    env_file:
+      - messages.env
+    depends_on:
+      - jibber-jabber-messages-db
+
+  jibber-jabber-messages-db:
+    container_name: messagesDB
+    image: postgres:12
+    restart: always
+    env_file:
+      - messages.env
+    ports:
+      - 5435:5432
+    volumes:
+      - messages:/var/lib/postgresql/data
+
+volumes:
+  posts:
+  auth:
+  messages:
