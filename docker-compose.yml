@@ -3,6 +3,7 @@ version: '3'
 services:
 
   jibber-jabber-posts-api:
+    container_name: jibber-jabber-posts-api
     image: ghcr.io/kuhamaven/jibber-jabber-posts_api:latest
     ports:
       - 8001:8001
@@ -12,6 +13,7 @@ services:
       - jibber-jabber-posts-db
 
   jibber-jabber-posts-db:
+    container_name: jibber-jabber-posts-db
     image: postgres:12
     restart: always
     env_file:
@@ -22,6 +24,7 @@ services:
       - posts:/var/lib/postgresql/data
 
   jibber-jabber-auth-api:
+    container_name: jibber-jabber-auth-api
     image: ghcr.io/kuhamaven/jibber-jabber-users-auth_api:latest
     ports:
       - 8002:8002
@@ -31,6 +34,7 @@ services:
       - jibber-jabber-auth-db
 
   jibber-jabber-auth-db:
+    container_name: jibber-jabber-auth-db
     image: postgres:12
     restart: always
     env_file:
@@ -41,6 +45,7 @@ services:
       - auth:/var/lib/postgresql/data
 
   jibber-jabber-messages-api:
+    container_name: jibber-jabber-messages-api
     image: ghcr.io/kuhamaven/jibber-jabber-messages_api:latest
     ports:
       - 8003:8003
@@ -50,6 +55,7 @@ services:
       - jibber-jabber-messages-db
 
   jibber-jabber-messages-db:
+    container_name: jibber-jabber-messages-db
     image: postgres:12
     restart: always
     env_file:
@@ -60,11 +66,13 @@ services:
       - messages:/var/lib/postgresql/data
 
   jibber-jabber-client:
+    container_name: jibber-jabber-client
     image: ghcr.io/sofiasdz/jibber-jabber-ui:latest
     ports:
       - 3000:3000
 
   jibber-jabber-proxy:
+    container_name: jibber-jabber-proxy
     build:
       context: .
       dockerfile: Dockerfile
