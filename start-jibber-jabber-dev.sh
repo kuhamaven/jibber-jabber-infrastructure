@@ -6,6 +6,7 @@ PURPLE=$'\e[1;35m'
 CYAN=$'\e[1;36m'
 NC=$'\e[0m'
 
+cd ~/jj/jibber-jabber-infrastructure/
 docker-compose -f docker-compose.dev.yml down
 echo "${PURPLE}Starting Jibber Jabber!${NC}"
 echo "${RED}Current profile: Dev${NC}"
