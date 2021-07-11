@@ -15,7 +15,6 @@ services:
       - jibber-jabber-messages-api
       - jibber-jabber-posts-api
       - jibber-jabber-client
-      - certbot
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
