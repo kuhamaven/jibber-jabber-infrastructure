@@ -18,3 +18,4 @@ echo "${CYAN}Okay, ready to roll!${NC}"
 docker-compose -f docker-compose.dev.yml up --force-recreate -d
 echo "${CYAN}Jibber Jabber is now running!${NC}"
 echo "${PURPLE}Thanks! Have a nice day!${NC}"
+./init-letsencrypt.dev
