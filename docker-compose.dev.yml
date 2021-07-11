@@ -2,6 +2,31 @@ version: '3'
 
 services:
 
+  jibber-jabber-proxy:
+    container_name: jibber-jabber-proxy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - jibber-jabber-auth-api
+      - jibber-jabber-messages-api
+      - jibber-jabber-posts-api
+      - jibber-jabber-client
+      - certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
   jibber-jabber-posts-api:
     container_name: jibber-jabber-posts-api
     image: ghcr.io/kuhamaven/jibber-jabber-posts_api-dev:latest
@@ -70,30 +95,6 @@ services:
     image: ghcr.io/sofiasdz/jibber-jabber-ui-dev:latest
     ports:
       - 3000:3000
-
-  jibber-jabber-proxy:
-    container_name: jibber-jabber-proxy
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - 80:80
-      - 443:443
-    depends_on:
-      - jibber-jabber-auth-api
-      - jibber-jabber-messages-api
-      - jibber-jabber-posts-api
-      - jibber-jabber-client
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
 volumes:
   posts:
